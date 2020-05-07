@@ -1,0 +1,34 @@
+lesson 3
+
+select * from students order by registration_date desc
+
+select * from courses where students_count > '4' and duration > '10' order by price desc limit 5
+
+(select name from students order by age limit 3) union (select name from teachers order by age desc limit 3) union (select name from courses order by duration desc limit 3)
+
+lesson 4
+
+select avg(age) from teachers where salary > '10000'
+
+select sum(price) from courses where type = 'DESIGN'
+
+select sum(duration)*60 from courses where type = 'PROGRAMMING'
+
+lesson 6
+
+select students.name as student_name, sum(courses.duration) as all_time from students
+join subscriptions on students.id = subscriptions.student_id
+join courses on courses.id = subscriptions.course_id 
+group by students.name
+
+select teachers.name as teachers_name, avg(students.age) as avg_students_age from teachers
+join courses on teachers.id = courses.teacher_id 
+join subscriptions on courses.id = subscriptions.course_id
+join students on subscriptions.student_id = students.id 
+group by teachers.name
+
+
+select courses.type as courses_type, avg(teachers.salary) as avg_teachers_salary from courses
+join teachers on courses.teacher_id = teachers.id 
+where courses.type in ('DESIGN', 'PROGRAMMING', 'MARKETING')
+group by courses.type
